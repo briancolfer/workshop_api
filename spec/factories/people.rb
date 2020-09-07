@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :person do
-    first_name { "MyString" }
-    last_name { "MyString" }
-    birth_date { "2020-08-30" }
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
+    birth_date { Faker::Date.birthday(min_age:  18, max_age: 65)}
   end
 end
