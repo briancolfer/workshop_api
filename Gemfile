@@ -42,6 +42,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'simplecov'
+  gem "dotenv-rails"
 end
 
 group :development do
