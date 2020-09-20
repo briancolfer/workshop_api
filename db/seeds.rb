@@ -5,8 +5,24 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-person_1 = Person.create([{first_name: "Fred", last_name: "Flintstone", birth_date: "1960-01-01"}])
-person_2 = Person.create([{first_name: "Wilma", last_name: "Flintstone", birth_date: "1960-01-01"}])
-person_3 = Person.create([{first_name:"Baby", last_name: "Example", birth_date:"2020-01-01"}])
-workshop_1 = Workshop.create([{workshop_name: 'Humboldt Chamber Music Workshop'},{description: 'Adult chamber music workshop'}])
-workshop_2 = Workshop.create([{workshop_name: 'Ruby on Rails beyond the basics'}, {description: 'Beyond the basics of creating a rails app '}])
+require 'faker'
+
+10.times do
+  Person.create(first_name: Faker::Name.first_name,last_name: Faker::Name.last_name,birth_date: Faker::Date.birthday(min_age:18, max_age:85))
+end
+
+# Previous workshops
+10.times do
+  wname = Faker::University.name + "Music Workshop"
+  start_date = Faker::Date.backward(days:700)
+  end_date = start_date + 5
+  Workshop.create(workshop_name: wname, description: Faker::Lorem.paragraph( sentence_count: 2),start_date: start_date, end_date: end_date)
+end
+
+# Future workshops
+10.times do
+  wname = Faker::University.name + "Music Workshop"
+  start_date = Faker::Date.forward(days:700)
+  end_date = start_date + 5
+  Workshop.create(workshop_name: wname, description: Faker::Lorem.paragraph( sentence_count: 2),start_date: start_date, end_date: end_date)
+end
