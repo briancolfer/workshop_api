@@ -13,7 +13,7 @@ end
 
 # Previous workshops
 10.times do
-  wname = Faker::University.name + "Music Workshop"
+  wname = Faker::University.name + " Music Workshop"
   start_date = Faker::Date.backward(days:700)
   end_date = start_date + 5
   Workshop.create(workshop_name: wname, description: Faker::Lorem.paragraph( sentence_count: 2),start_date: start_date, end_date: end_date)
@@ -21,7 +21,7 @@ end
 
 # Future workshops
 10.times do
-  wname = Faker::University.name + "Music Workshop"
+  wname = Faker::University.name + " Music Workshop"
   start_date = Faker::Date.forward(days:700)
   end_date = start_date + 5
   Workshop.create(workshop_name: wname, description: Faker::Lorem.paragraph( sentence_count: 2),start_date: start_date, end_date: end_date)
