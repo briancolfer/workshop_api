@@ -33,6 +33,63 @@ RSpec.describe 'People API', type: :request do
         expect(response).to have_http_status(200)
       end
     end
+
+    context 'when a person record does not exist' do
+      let(:person_id) {100}
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns a not found message' do
+        expect(response.body).to match(/Couldn't find Person/)
+      end
+    end
+  end
+
+  # Tests for POST /people
+  describe 'POST /people' do
+    # valid payload
+    let(:valid_attributes) { { first_name: 'Fred', last_name: 'Flintstone', birth_date: '01/01/1960'} }
+
+    context 'when the request is valid' do
+      before{ post '/people', params: valid_attributes }
+
+      it 'creates a person' do
+        expect(json['first_name']).to eq('Fred')
+      end
+
+      it 'returns http status code 201' do
+        expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'when the request is invalid' do
+      before { post '/people', params: { first_name: 'Wilma' } }
+
+      it 'returns http status 422' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns a validation failure message' do
+        expect(response.body).to match(/Validation failed: Last name can't be blank/)
+      end
+    end
+  end
+
+  describe 'PUT /people/:id' do
+    let(:valid_attributes) { { first_name: 'Barny', last_name: 'Rubble', birth_date: '01/01/1960'} }
+
+    context 'when the person record exists' do
+      before { put "/people/#{person_id}", params: valid_attributes}
+
+      it 'updates the record' do
+        expect(response.body).to be_empty
+      end
+
+      it 'returns http status 204' do
+        expect(response).to have_http_status(204)
+      end
+    end
   end
 
   path '/people' do

@@ -1,2 +1,0 @@
-class WorkshopController < ApplicationController
-end
