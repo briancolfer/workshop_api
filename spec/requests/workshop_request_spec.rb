@@ -78,13 +78,13 @@ RSpec.describe 'Workshop API', type: :request do
       end
     end
   end
-=begin
+
   #TODO: get swagger specs to work
   path '/workshops/{id}' do
 
     get 'Returns a workshop' do
       tags 'Workshops'
-      produces 'application/json', 'applicaiton/xml'
+      produces 'application/json', 'application/xml'
       parameter name: :id, in: :path, type: :string
 
       response '200', 'workshop found' do
@@ -98,25 +98,22 @@ RSpec.describe 'Workshop API', type: :request do
                },
                required: ['id', 'workshop_name', 'start_date', 'end_date']
 
+        let(:id) { Workshop.create(workshop_name: 'Workshop 1',
+                                   description: '0123456789',
+                                   start_date: Date.yesterday,
+                                   end_date: Date.tomorrow).id }
+        run_test!
       end
-      let(:id) { Workshop.create(workshop_name: 'Workshop 1',
-                                 start_date: Date.yesterday,
-                                 end_date: Date.tomorrow).id }
 
-      puts("DEBUG: #{__LINE__}: rswag test id = #{id}")
+      response '404', 'workshop not found' do
+        let(:id) { 'invalid' }
+        run_test!
+      end
 
-      run_test!
+      # response '406', 'unsupported accept header' do
+      #   let(:'Accept') { 'application/foo' }
+      #   run_test!
+      # end
     end
-
-    # response '404', 'workshop not found' do
-    #   let(:id) { 100 }
-    #   run_test!
-    # end
-    #
-    # response '406', 'unsupported header' do
-    #   let(:'Accept') { 'applicaiton/foo' }
-    #   run_test!
-    # end
   end
-=end
 end
