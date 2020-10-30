@@ -91,11 +91,15 @@ RSpec.describe 'People API', type: :request do
       end
     end
   end
+end
+
+describe 'People API', type: :request, swagger_doc: 'api/swagger_doc.json' do
+  TAGS_PEOPLE = Person.freeze
 
   path '/people' do
 
     post 'Creates a person' do
-      tags 'People'
+      tags TAGS_PEOPLE
       consumes 'application/json'
       parameter name: :person, in: :body, schema: {
           type: :object,
@@ -117,6 +121,17 @@ RSpec.describe 'People API', type: :request do
       response '422', 'invalid request' do
         let(:person) { { first_name: Faker::Name.first_name } }
         run_test!
+      end
+    end
+
+    get 'Returns all people' do
+      tags TAGS_PEOPLE
+      produces 'application/json'
+
+      response '200', "People found" do
+        before { create_list(:person, 2)}
+
+        # include_context 'with integration test'
       end
     end
 

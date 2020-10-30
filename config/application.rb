@@ -19,6 +19,13 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Allow auto-generating body response to swagger endpoint
+#if Rails.env.test?
+#  Rspec.configure do |config|
+#    config.swagger_dry_run = false
+#  end
+#end
+
 module WorkshopApi
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

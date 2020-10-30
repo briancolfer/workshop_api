@@ -8,7 +8,7 @@ class Person < ApplicationRecord
   private
 
   def validate_age
-    if birth_date.present? && birth_date.future?
+    if  birth_date.present? && birth_date >= Date.today
       errors.add(:birth_date, 'Must be older than today')
     end
   end

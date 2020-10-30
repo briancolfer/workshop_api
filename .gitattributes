@@ -1,0 +1,3 @@
+# Ignore swagger auto gen in PRs
+/swagger/api/* linguist-generated=true
+/swagger/api/* -diff
