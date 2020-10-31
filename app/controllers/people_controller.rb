@@ -13,7 +13,7 @@ class PeopleController < ApplicationController
   end
 
   # POST /people
-  def create()
+  def create
     @person = Person.create!(person_params)
     json_response(@person, :created)
   end

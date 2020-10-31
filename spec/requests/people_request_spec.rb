@@ -157,6 +157,5 @@ describe 'People API', type: :request, swagger_doc: 'api/swagger_doc.json' do
       end
     end
   end
+end
 =end
-# end
-
