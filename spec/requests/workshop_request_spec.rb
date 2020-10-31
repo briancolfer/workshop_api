@@ -3,7 +3,7 @@ require 'faker'
 
 RSpec.describe 'Workshop API', type: :request do
   #TODO: figure out why is there an off by 1
-  let!(:workshops) { create_list(:workshop, 10) }
+  let!(:workshops) { create_list(:workshop, 9) }
   let(:workshop_id) { workshops.first.id }
 
   describe 'GET /workshops' do
