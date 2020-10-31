@@ -3,7 +3,7 @@ require 'faker'
 
 RSpec.describe 'Workshop API', type: :request do
   #TODO: figure out why is there an off by 1
-  let!(:workshops) { create_list(:workshop, 9) }
+  let!(:workshops) { create_list(:workshop, 10) }
   let(:workshop_id) { workshops.first.id }
 
   describe 'GET /workshops' do
@@ -46,17 +46,74 @@ RSpec.describe 'Workshop API', type: :request do
     end
   end
 
+  describe 'POST /workshops' do
+    let(:valid_attributes) { { workshop_name: 'Workshop1' ,
+                               description:  'A workshop description',
+                               start_date:  1.days.from_now,
+                               end_date:  7.days.from_now
+    } }
+
+    context 'when the request is valid' do
+      before { post '/workshops', params: valid_attributes}
+
+      it'creates a workshop' do
+
+        expect(json['workshop_name']).to eq('Workshop1')
+      end
+
+      it 'returns http status code 201' do
+        expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'when the request is invalid' do
+      before { post '/workshops', params: { workshop_name: '1234' } }
+
+      it 'returns a https status of 422' do
+        #puts("\nDEBUG: #{__LINE__}: response body is #{response.body}\n")
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns a validation failure message' do
+        expect(response.body).to match(/Validation failed: Workshop name is too short/)
+      end
+
+    end
+
+    describe 'PUT /workshop/:id' do
+      let(:valid_attributes) { { workshop_name: 'Updated workshop',
+                                 description: 'Updated description',
+                                 start_date: 7.days.from_now,
+                                 end_date: 14.days.from_now
+      }}
+
+      context 'when the request is valid' do
+        before { put "/workshops/#{workshop_id}", params: valid_attributes}
+
+        it 'updates the record' do
+          expect(response.body).to be_empty
+        end
+
+        it 'returns http status 204' do
+          expect(response).to have_http_status(204)
+        end
+      end
+    end
+
+
+  end
 
   path '/workshops' do
 
     post 'Creates a workshop ' do
-      tags 'Workshops'
+      TAGS_WORKSHOPS = 'WORKSHOPS'
       consumes 'application/json'
 
       parameter name: :workshop, in: :body, schema: {
           type: :object,
           properties: {
               workshop_name: { type: :string },
+              description: { type: :string },
               description: { type: :string },
               start_date: { type: :string },
               end_date: { type: :string }

@@ -6,13 +6,23 @@ class WorkshopsController < ApplicationController
     json_response(@workshops)
   end
 
+  def show
+    json_response(@workshop)
+  end
+
   def create
     @workshop = Workshop.create!(workshop_params)
     json_response(@workshop, :created)
   end
 
-  def show
-    json_response(@workshop)
+  def update
+    @workshop.update(workshop_params)
+    head :no_content
+  end
+
+  def destroy
+    @person.destroy
+    head :no_content
   end
 
   private
