@@ -34,6 +34,9 @@
 # Ignore converage report
 coverage/
 
+# Ignore swagger generated docs
+swagger/
+
 ####
 # dotenv
 .env

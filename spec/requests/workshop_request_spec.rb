@@ -114,7 +114,6 @@ RSpec.describe 'Workshop API', type: :request do
           properties: {
               workshop_name: { type: :string },
               description: { type: :string },
-              description: { type: :string },
               start_date: { type: :string },
               end_date: { type: :string }
           },
@@ -173,5 +172,7 @@ RSpec.describe 'Workshop API', type: :request do
       #   run_test!
       # end
     end
+
   end
+
 end
