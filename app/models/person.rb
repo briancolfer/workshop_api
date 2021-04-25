@@ -1,4 +1,5 @@
 class Person < ApplicationRecord
+  has_and_belongs_to_many :workshops
   validates :first_name, presence: true, length: { minimum: 1}
   validates :last_name, presence: true, length: { minimum: 1}
 

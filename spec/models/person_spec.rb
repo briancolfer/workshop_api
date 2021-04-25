@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Person, type: :model do
-  let(:person1) { build(:person) }
+  let(:person1) { build_stubbed(:person) }
   let(:invalid_person1)  { build(:person, first_name: '', last_name: '') }
   let(:invalid_person2) { build(:person, birth_date: Date.tomorrow ) }
   let(:invalid_person3) { build(:person, birth_date: Date.today) }

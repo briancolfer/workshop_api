@@ -1,4 +1,5 @@
 class Workshop < ApplicationRecord
+  has_and_belongs_to_many :people
   validates :workshop_name, presence: true, length: { minimum: 5}, uniqueness: true
   validates :description, length: { minimum: 10 }
 
